@@ -2,49 +2,37 @@ package com.leetcode.easy;
 
 public class Easy53MaximumSubarray {
 	public int maxSubArray(int[] nums) {
-		
-//
-//		for(int i=1;i<nums.length;i++){
-//			nums[i]=nums[i-1]+nums[i];
-//		}
-//		int max=nums[0];
-//		for(int i=1;i<nums.length;i++){
-//			if(nums[i]>max){
-//				max = nums[i];
-//			}
-//		}
-//		
-//		return max;
-		
-		
-		int newPosition=0;
-		boolean positive=false;
-		for(int i=1;i<nums.length;i++){
-			if(nums[i]>0){
-				if(positive){//++
-					nums[newPosition]=nums[newPosition]+nums[i];
-				}else{//-+
-					newPosition++;
-					nums[newPosition]=nums[i];
+
+		int sum = nums[0];
+		int maxsum = nums[0];
+		for (int i = 1; i < nums.length; i++) {
+			if (nums[i] > 0) {
+				if (sum < 0) {
+					sum = 0;
 				}
-			}else{
-				if(positive){//+-
-					newPosition++;
-					nums[newPosition]=nums[i];
-				}else{//--
-					nums[newPosition]=nums[newPosition]+nums[i];
+				sum = sum + nums[i];
+				if (sum > maxsum) {
+					maxsum = sum;
+				}
+			} else {
+				sum = sum + nums[i];
+				if (sum <= 0) {
+					sum = 0;
+					if ( nums[i] > maxsum){
+						maxsum = nums[i];
+					}
 				}
 			}
 		}
-		
-		for(int i=0;i<=newPosition;i++){
-			
-		}
-		return 0;
+
+		return maxsum;
+
 	}
 
 	public static void main(String[] args) {
-
+		Easy53MaximumSubarray test = new Easy53MaximumSubarray();
+		System.out.println(test.maxSubArray(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 }));
+		System.out.println(test.maxSubArray(new int[] { -2, -1 }));
 	}
 
 }
